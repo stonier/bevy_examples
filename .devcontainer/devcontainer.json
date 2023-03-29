@@ -1,0 +1,46 @@
+{
+    "name": "bevy_examples",
+
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "args": {
+            "NAME": "bevy_examples",
+            "RUST_VERSION": "1.68",
+            "DEBIAN_VERSION": "bullseye"
+        },
+        "context": ".."
+    },
+    "containerEnv": {
+        "DISPLAY": "${localEnv:DISPLAY}",
+    },
+    "remoteUser": "zen",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bierner.github-markdown-preview",
+                "bungcip.better-toml",
+                "streetsidesoftware.code-spell-checker",
+                "lextudio.restructuredtext",
+                "rust-lang.rust-analyzer"
+            ]
+        }
+    },
+    "mounts": [
+		{
+            "source": "/tmp/.X11-unix",
+            "target": "/tmp/.X11-unix",
+            "type": "bind"
+        }
+	],
+    "runArgs": [
+        "--runtime=nvidia",
+        "--gpus",
+        "all",
+        "--network",
+        "host"
+    ]    
+    // "postCreateCommand": "poetry install",
+    // Breaks codespaces
+    // "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind",
+    // "workspaceFolder": "/workspaces"
+ }
